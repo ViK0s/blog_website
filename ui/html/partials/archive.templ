@@ -1,0 +1,35 @@
+package partials
+
+import (
+    "blog.michalg.net/internal/models"
+)
+
+
+templ Archive(blogposts []*models.BlogPost){
+    
+        <section class="archive">
+        <div class="artykulblogsite">
+        <article>
+        <h2>Archive</h2>
+        <ol>
+            <li>
+            <details>
+                <summary>
+                    2024
+                </summary>
+                for _, item := range blogposts{
+                <ul>
+                    <li><a href={templ.URL(returnURL(item.ID))}>{item.Title}</a></li>
+                </ul>
+                }
+            </details>
+            </li>
+
+        
+        </ol>
+        
+        </article>
+        </div>
+        </section>
+    
+}

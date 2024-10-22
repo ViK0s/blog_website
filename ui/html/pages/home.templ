@@ -1,17 +1,9 @@
 package pages
 
-import (
-    "blog.michalg.net/internal/models"
-)
 
-templ Hometmp(latestblog *models.BlogPost){
-    <h2>kurwa</h2>
-
-    <div>
-    <h3>{ latestblog.Title }</h3>
-    
-    <article>
-    {latestblog.Content}
-    </article>
-    </div>
+templ Hometmp(latestblog templ.Component, ndblog templ.Component){
+    <main>
+    @latestblog
+    @ndblog
+    </main>
 }

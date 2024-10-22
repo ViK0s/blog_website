@@ -29,7 +29,7 @@ func Nav() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<nav><ul><li><a href=\"/\">Home</a></li><li><a href=\"/\">Projects</a></li><li><a href=\"/\">Blog</a></li><li><a href=\"/\">Github</a></li><li><a href=\"/\">Contact</a></li></ul></nav>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<nav><ul><li><a href=\"/\">Home</a></li><li><a href=\"/projects\">Projects</a></li><li><a href=\"/blog\">Blog</a></li><li><a href=\"https://github.com/ViK0s\">Github</a></li><li><a href=\"/about\">Contact</a></li></ul></nav>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

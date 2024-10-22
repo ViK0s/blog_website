@@ -7,9 +7,7 @@ import (
 	"time"
 )
 
-// Define a Snippet type to hold the data for an individual snippet. Notice how
-// the fields of the struct correspond to the fields in our MySQL snippets
-// table?
+// ts should have a tag string or table or smth
 type BlogPost struct {
 	ID      int
 	Title   string
@@ -24,7 +22,7 @@ type BlogPostModel struct {
 
 // This will insert a new snippet into the database.
 func (m *BlogPostModel) Insert(title string, content string) (int, error) {
-	stmt := `INSERT INTO snippets (title, content, created)
+	stmt := `INSERT INTO blog_posts (title, content, created)
 	VALUES(?, ?, UTC_TIMESTAMP(), DATE_ADD(UTC_TIMESTAMP(), INTERVAL ? DAY))`
 
 	result, err := m.DB.Exec(stmt, title, content)
@@ -47,7 +45,7 @@ var ErrNoRecord = errors.New("models: no matching record found")
 
 // This will return a specific snippet based on its id.
 func (m *BlogPostModel) Get(id int) (*BlogPost, error) {
-	stmt := `SELECT id, title, content, created FROM snippets`
+	stmt := `SELECT id, title, content, created FROM blog_posts`
 	// Use the QueryRow() method on the connection pool to execute our
 	// SQL statement, passing in the untrusted id variable as the value for the
 	// placeholder parameter. This returns a pointer to a sql.Row object which
@@ -77,9 +75,9 @@ func (m *BlogPostModel) Get(id int) (*BlogPost, error) {
 }
 
 // This will return the the most recent blogpost
-func (m *BlogPostModel) Latest() *BlogPost {
+func (m *BlogPostModel) Latest() []*BlogPost {
 	stmt := `SELECT id, title, content, created FROM blog_posts
-	ORDER BY id DESC LIMIT 1`
+	ORDER BY id DESC LIMIT 10`
 	// Use the Query() method on the connection pool to execute our
 	// SQL statement. This returns a sql.Rows resultset containing the result of
 	// our query.
@@ -91,13 +89,17 @@ func (m *BlogPostModel) Latest() *BlogPost {
 
 	defer rows.Close()
 
-	// snippets := []*BlogPost{}
-	s := &BlogPost{}
+	snippets := []*BlogPost{}
+
 	for rows.Next() {
+		s := &BlogPost{}
+
 		err = rows.Scan(&s.ID, &s.Title, &s.Content, &s.Created)
 		if err != nil {
 			log.Fatal(err)
 		}
+		snippets = append(snippets, s)
 	}
-	return s
+
+	return snippets
 }

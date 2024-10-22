@@ -1,0 +1,22 @@
+package partials
+
+import (
+    "blog.michalg.net/internal/models"
+)
+
+
+templ Projecttemp(projects []*models.Project){
+    for _, item := range projects {
+        <section class="short">
+        <div class="artykul">
+        <aside>
+        <img src={item.ImgUrl}>
+        </aside>
+        <article>
+        <a href={ templ.URL(item.Url) }><h3>{ item.Title }</h3></a>
+        {item.Content}
+        </article>
+        </div>
+        </section>
+    }
+}

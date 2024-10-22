@@ -1,0 +1,28 @@
+package partials
+
+import (
+    "blog.michalg.net/internal/models"
+)
+
+
+templ BlogPostFull(bloglist []*models.BlogPost){
+    
+        <section class="fullblog">
+            for _, item := range bloglist {
+            <div class="artykulblogsite">
+            <article>
+            <hr>
+            <a href={templ.URL(returnURL(item.ID))}><h3>{ item.Title }</h3></a>
+            {item.Content}
+            <hr>
+            <!--this paragraph is here so that both of those can be on single line-->
+            <p class="created_on_full">
+            Published on:
+            {item.Created.Local().Local().Format("2006-01-02 15:04:05")}
+            </p>
+            </article>
+            </div>
+            }
+        </section>
+    
+}

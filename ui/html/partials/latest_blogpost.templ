@@ -1,0 +1,29 @@
+package partials
+
+import (
+    "blog.michalg.net/internal/models"
+    "strconv"
+)
+
+func returnURL(blogid int) (string){
+    return "/blog/view?id=" + strconv.Itoa(blogid)
+}
+
+templ LatestBlogPostTempl(latestblog *models.BlogPost){
+    <section class="short">
+    <h2>Latest Post</h2>
+    <div class="artykulblog">
+    <article>
+    <a href={ templ.URL(returnURL(latestblog.ID)) }><h3>{ latestblog.Title }</h3></a>
+    {latestblog.Content}
+    <hr>
+    <!--this paragraph is here so that both of those can be on single line-->
+    <p class="created_on">
+    Published on:
+    {latestblog.Created.Local().Local().Format("2006-01-02 15:04:05")}
+    </p>
+    </article>
+    </div>
+    </section>
+    
+}

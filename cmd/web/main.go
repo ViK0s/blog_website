@@ -12,6 +12,7 @@ import (
 
 type app struct {
 	blogpost *models.BlogPostModel
+	project  *models.ProjectModel
 }
 
 func main() {
@@ -34,6 +35,7 @@ func main() {
 
 	app := &app{
 		blogpost: &models.BlogPostModel{DB: db},
+		project:  &models.ProjectModel{DB: db},
 	}
 
 	fileServer := http.FileServer(http.Dir("./ui/static/"))
@@ -41,7 +43,10 @@ func main() {
 	mux.Handle("GET /static/", http.StripPrefix("/static", fileServer))
 
 	mux.HandleFunc("GET /{$}", app.home)
-	mux.HandleFunc("GET /about", about)
+	mux.HandleFunc("GET /about", app.about)
+	mux.HandleFunc("GET /blog/view", app.blogpostview)
+	mux.HandleFunc("GET /projects", app.projectshandler)
+	mux.HandleFunc("GET /blog", app.blogpostpage)
 
 	log.Println("Starting a server at port :4000")
 	log.Fatal(http.ListenAndServe(*addr, mux))
