@@ -43,7 +43,7 @@ func (app *app) blogpostview(w http.ResponseWriter, r *http.Request) {
 	// Use the SnippetModel object's Get method to retrieve the data for a
 	// specific record based on its ID. If no matching record is found,
 	// return a 404 Not Found response.
-	snippet, err := app.blogpost.Get(id)
+	got_blog, err := app.blogpost.Get(id)
 
 	if err != nil || id < 1 {
 		fmt.Println(err)
@@ -59,8 +59,9 @@ func (app *app) blogpostview(w http.ResponseWriter, r *http.Request) {
 	//     return
 	// }
 	// Write the snippet data as a plain-text HTTP response body.
-	fmt.Println(id)
-	fmt.Fprintf(w, "%+v", snippet)
+
+	component := base_html.HTML(got_blog.Title, pages.Blogpostviewtempl(partials.BlogPostViewFull(got_blog)), partials.Nav())
+	component.Render(context.Background(), w)
 }
 
 func (app *app) projectshandler(w http.ResponseWriter, r *http.Request) {

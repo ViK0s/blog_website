@@ -17,7 +17,7 @@ type app struct {
 
 func main() {
 	addr := flag.String("addr", ":4000", "HTTP network address")
-	// dsn := flag.String("dsn", "web:pass@/snippetbox?parseTime=true", "MySQL data source name")
+	buildbool := flag.String("bld", "false", "Build or not")
 
 	flag.Parse()
 
@@ -36,6 +36,12 @@ func main() {
 	app := &app{
 		blogpost: &models.BlogPostModel{DB: db},
 		project:  &models.ProjectModel{DB: db},
+	}
+
+	if *buildbool == "true" {
+		app.build()
+		log.Println("Built the site, returning")
+		return
 	}
 
 	fileServer := http.FileServer(http.Dir("./ui/static/"))

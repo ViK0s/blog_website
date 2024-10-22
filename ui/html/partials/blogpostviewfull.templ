@@ -1,0 +1,26 @@
+package partials
+
+import (
+    "blog.michalg.net/internal/models"
+)
+
+
+templ BlogPostViewFull(blog *models.BlogPost){
+    
+        <section class="fullblog">
+            <div class="artykulblogsite">
+            <article>
+            <hr>
+            <h3>{ blog.Title }</h3>
+            {blog.Content}
+            <hr>
+            <!--this paragraph is here so that both of those can be on single line-->
+            <p class="created_on_full">
+            Published on:
+            {blog.Created.Local().Local().Format("2006-01-02 15:04:05")}
+            </p>
+            </article>
+            </div>
+        </section>
+    
+}

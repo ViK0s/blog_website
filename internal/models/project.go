@@ -21,10 +21,10 @@ type ProjectModel struct {
 }
 
 // This will insert a new snippet into the database.
-func (m *ProjectModel) Insert(title string, content string) (int, error) {
+func (m *ProjectModel) Insert(title string, content string, imgurl string) (int, error) {
 	stmt := `INSERT INTO projects (title, content, url, imgurl)`
 
-	result, err := m.DB.Exec(stmt, title, content)
+	result, err := m.DB.Exec(stmt, title, content, imgurl)
 	if err != nil {
 		return 0, err
 	}
@@ -44,7 +44,7 @@ func (m *ProjectModel) Insert(title string, content string) (int, error) {
 
 // This will return a specific snippet based on its id.
 func (m *ProjectModel) Get(id int) (*Project, error) {
-	stmt := `SELECT id, title, content, created FROM projects`
+	stmt := `SELECT id, title, content, url, imgurl FROM projects`
 	// Use the QueryRow() method on the connection pool to execute our
 	// SQL statement, passing in the untrusted id variable as the value for the
 	// placeholder parameter. This returns a pointer to a sql.Row object which
@@ -57,7 +57,7 @@ func (m *ProjectModel) Get(id int) (*Project, error) {
 	// to row.Scan are *pointers* to the place you want to copy the data into,
 	// and the number of arguments must be exactly the same as the number of
 	// columns returned by your statement.
-	err := row.Scan(&s.ID, &s.Title, &s.Content, &s.Url)
+	err := row.Scan(&s.ID, &s.Title, &s.Content, &s.Url, &s.ImgUrl)
 	if err != nil {
 		// If the query returns no rows, then row.Scan() will return a
 		// sql.ErrNoRows error. We use the errors.Is() function check for that

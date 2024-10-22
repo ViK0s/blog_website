@@ -20,10 +20,10 @@ type BlogPostModel struct {
 	DB *sql.DB
 }
 
-// This will insert a new snippet into the database.
+// This will insert a new blog_post into the database.
 func (m *BlogPostModel) Insert(title string, content string) (int, error) {
 	stmt := `INSERT INTO blog_posts (title, content, created)
-	VALUES(?, ?, UTC_TIMESTAMP(), DATE_ADD(UTC_TIMESTAMP(), INTERVAL ? DAY))`
+	VALUES(?, ?, UTC_TIMESTAMP())`
 
 	result, err := m.DB.Exec(stmt, title, content)
 	if err != nil {
