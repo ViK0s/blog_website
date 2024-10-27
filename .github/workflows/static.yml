@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Change the env var
-        run: "go env -w GO111MODULE=off"
+        run: "go mod init"
       - name: Build the static website
         run: "go run ./cmd/web -bld true"
       - name: Checkout
