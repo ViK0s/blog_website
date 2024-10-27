@@ -3,6 +3,8 @@ package main
 import (
 	"bufio"
 	"context"
+	"io"
+	"io/fs"
 	"log"
 	"os"
 	"path/filepath"
@@ -70,7 +72,7 @@ func changelinks(ff *os.File, links map[string]string, filename string) {
 		href, exists := item.Attr("src")
 		if exists {
 
-			item.SetAttr("src", "ui/static/img/"+href[12:])
+			item.SetAttr("src", "./buildimg/"+href[12:])
 
 		}
 	})
@@ -239,7 +241,7 @@ func (app *app) build() {
 	for scannery.Scan() {
 		if len(scannery.Text()) > 12 {
 			if scannery.Text()[0:11] == "        url" {
-				data2 += "        url(" + "ui/" + scannery.Text()[13:]
+				data2 += "        url(" + "./buildimg" + scannery.Text()[23:]
 				continue
 			}
 		}
@@ -251,6 +253,19 @@ func (app *app) build() {
 	}
 
 	os.WriteFile("buildstat/main.css", []byte(data2), 0644)
+
+	// move images from the working dir to the build dir
+	pathy := filepath.Join("./buildstat", "buildimg")
+	err = os.MkdirAll(pathy, os.ModePerm)
+	err = filepath.WalkDir("./ui/static/img", func(path string, d fs.DirEntry, err error) error {
+		ffff, err := os.Open(path)
+		fffff, err := os.Create("./buildstat/buildimg/" + d.Name())
+		io.Copy(fffff, ffff)
+		return nil
+	})
+	if err != nil {
+		log.Fatalf("impossible to walk directories: %s", err)
+	}
 
 	homebuild(app, links)
 	buildabout(links)
