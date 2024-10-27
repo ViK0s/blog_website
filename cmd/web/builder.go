@@ -241,7 +241,7 @@ func (app *app) build() {
 	for scannery.Scan() {
 		if len(scannery.Text()) > 12 {
 			if scannery.Text()[0:11] == "        url" {
-				data2 += "        url(" + "/blog_website/buildstat/buildimg" + scannery.Text()[23:]
+				data2 += "        url(" + "/blog_website/buildstat" + scannery.Text()[23:]
 				continue
 			}
 		}
