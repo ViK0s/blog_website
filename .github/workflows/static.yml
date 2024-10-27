@@ -29,6 +29,8 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+      - name: Cd into the correct dir??
+        run: "cd /home/runner/work/blog_website"
       - name: Change the env var
         run: "go mod init"
       - name: Build the static website
