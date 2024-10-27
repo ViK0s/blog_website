@@ -87,7 +87,7 @@ func changelinks(ff *os.File, links map[string]string, filename string) {
 
 // passing the pointer to app but not expanding the app struct because I want the app to not have random shit in it
 func homebuild(app *app, links map[string]string) {
-	f, err := os.Create("buildstat/home.html")
+	f, err := os.Create("buildstat/index.html")
 	if err != nil {
 		log.Fatalf("failed to create output file: %v", err)
 	}
@@ -97,12 +97,12 @@ func homebuild(app *app, links map[string]string) {
 
 	f.Close()
 
-	ff, err := os.OpenFile("buildstat/home.html", os.O_RDWR, os.ModeAppend)
+	ff, err := os.OpenFile("buildstat/index.html", os.O_RDWR, os.ModeAppend)
 	if err != nil {
 		log.Fatalf("failed to open specified file %v", err)
 	}
 
-	changelinks(ff, links, "buildstat/home.html")
+	changelinks(ff, links, "buildstat/index.html")
 }
 
 func buildabout(links map[string]string) {
@@ -218,7 +218,7 @@ func (app *app) build() {
 	}
 
 	//define a map so that we know which links to change
-	links := map[string]string{"/static/css/main.css": "./main.css", "/": "./home.html", "/projects": "./projects.html", "/blog": "./blogs.html", "/about": "./about.html"}
+	links := map[string]string{"/static/css/main.css": "./main.css", "/": "./index.html", "/projects": "./projects.html", "/blog": "./blogs.html", "/about": "./about.html"}
 
 	data, err := os.ReadFile("./ui/static/css/main.css")
 	if err != nil {
