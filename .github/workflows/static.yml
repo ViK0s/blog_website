@@ -43,9 +43,8 @@ jobs:
       #   run: go mod verify
       # - name: Change the env var
       #   run: "go mod init blog.michalg.net"
-      - name: testing
+      - name: Testing
         run: "ls"
-      
       - name: Build the static website
         run: "go run ./... -bld true"
       - name: Checkout
