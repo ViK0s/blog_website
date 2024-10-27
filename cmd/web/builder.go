@@ -70,7 +70,7 @@ func changelinks(ff *os.File, links map[string]string, filename string) {
 		href, exists := item.Attr("src")
 		if exists {
 
-			item.SetAttr("src", "blog_website/ui/static/img/"+href[12:])
+			item.SetAttr("src", "ui/static/img/"+href[12:])
 
 		}
 	})
@@ -239,7 +239,7 @@ func (app *app) build() {
 	for scannery.Scan() {
 		if len(scannery.Text()) > 12 {
 			if scannery.Text()[0:11] == "        url" {
-				data2 += "        url(" + "blog_website/ui/" + scannery.Text()[13:]
+				data2 += "        url(" + "ui/" + scannery.Text()[13:]
 				continue
 			}
 		}
