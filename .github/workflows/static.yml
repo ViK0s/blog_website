@@ -37,18 +37,15 @@ jobs:
           go-version: 1.22.5
       - name: Go Tidy
         run: go mod tidy && git diff --exit-code
-        working-directory: .
       - name: Go Mod
         run: go mod download
-        working-directory: .
       - name: Go Mod Verify
         run: go mod verify
-        working-directory: .
       # - name: Change the env var
       #   run: "go mod init blog.michalg.net"
       - name: Build the static website
         run: "go run . -bld true"
-        working-directory: ./cmd/web
+        working-directory: /cmd/web
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Pages
