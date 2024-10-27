@@ -241,7 +241,7 @@ func (app *app) build() {
 	for scannery.Scan() {
 		if len(scannery.Text()) > 12 {
 			if scannery.Text()[0:11] == "        url" {
-				data2 += "        url(" + "/blog_website/buildstat" + scannery.Text()[23:]
+				data2 += "url(" + "." + scannery.Text()[23:]
 				continue
 			}
 		}
@@ -259,8 +259,22 @@ func (app *app) build() {
 	err = os.MkdirAll(pathy, os.ModePerm)
 	err = filepath.WalkDir("./ui/static/img", func(path string, d fs.DirEntry, err error) error {
 		ffff, err := os.Open(path)
-		fffff, err := os.Create("./buildstat/buildimg/" + d.Name())
-		io.Copy(fffff, ffff)
+		//var fffff *os.File
+		if d.Name() == "grid.png" || d.Name() == "sunset.jpg" {
+			fffff, err := os.Create("./buildstat/" + d.Name())
+			io.Copy(fffff, ffff)
+			if err != nil {
+				log.Fatalf("fucked smth up")
+			}
+
+		} else {
+			fffff, err := os.Create("./buildstat/buildimg/" + d.Name())
+			io.Copy(fffff, ffff)
+			if err != nil {
+				log.Fatalf("fucked smth up")
+			}
+		}
+
 		return nil
 	})
 	if err != nil {
