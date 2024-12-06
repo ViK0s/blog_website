@@ -1,6 +1,6 @@
 # blogwebsite
 
-A fast and dirty blog made using GO + templ + css + sqlite
+blog made using GO + templ + css + sqlite
 
 ## Description
 
@@ -10,7 +10,7 @@ Run using : `go run ./cmd/web` while in the main catalogue
 
 ## TODO:
 - clean code
-- make a static site builder
-- deploy on github-pages
+- make a static site builder (DONE)
+- deploy on github-pages (DONE)
 
 
